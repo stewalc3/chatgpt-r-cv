@@ -2,9 +2,8 @@
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'; // Added
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
@@ -19,8 +18,8 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Grid } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import './Nav.css';
+
 const drawerWidth = 240;
 
 const theme = createTheme();
@@ -53,11 +52,6 @@ export default function NavBar({ children }) {
 
     const handleDrawerClose = () => {
         setOpen(false);
-    };
-    const navigate = useNavigate();
-    const navigateTo = (a) => {
-       // navigate(a.target.getAttribute("path"));
-        //useHistory().push();
     };
     return (
         <ThemeProvider theme={theme}>
