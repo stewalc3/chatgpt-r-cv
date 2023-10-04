@@ -67,8 +67,10 @@ export default function NavBar({ children }) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Howdy
+                        Hello
                     </Typography>
+                    
+                    
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -109,12 +111,12 @@ export default function NavBar({ children }) {
                             <CustomListItem path="/counter" text="Templates">
                                 <DescriptionIcon />
                             </CustomListItem>
-                            <CustomListItem path="/fetch-data" text="User Info">
+                            <CustomListItem path="/user-info" text="User Info">
                                 <AccountCircleIcon />
                             </CustomListItem>
 
                             <Divider />
-                            <CustomListItem text="Premium">
+                            <CustomListItem text="Premium" path="/fetch-data">
                                 <PaidIcon />
                             </CustomListItem>
                         </List>
