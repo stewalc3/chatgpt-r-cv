@@ -51,15 +51,19 @@ const Main = ({ open, children }) => (
 );
 
 export default function NavBar({ children }) {
-   
     
     const [ user, setUser ] = useState([]);
     const [ profile, setProfile ] = useState(null);
-    
+    const [localStorageLoaded, setLocalStorageLoaded] = useState(false); 
+   
+
+
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
+            localStorage.setItem("googleToken",codeResponse.access_token);
             setUser(codeResponse);
             console.log("Successful Google Login");
+            console.log("access token",user.access_token);
         },
         onError: (error) => console.log('Login Failed:', error)
     });
@@ -78,11 +82,23 @@ export default function NavBar({ children }) {
                     })
                     .then((res) => {
                         setProfile(res.data);
+                        localStorageLoaded=true;
                     })
                     .catch((err) => console.log(err));
             }
         },[ user ]
     );
+
+    useEffect(() => {
+        var gt = localStorage.getItem('googleToken');
+        if (gt != null && gt !== "undefined" && gt !== "null" && !localStorageLoaded) {
+          setUser({
+            "access_token": gt
+          });
+          setLocalStorageLoaded(true);
+        }
+      }, [localStorageLoaded]);
+
 
     const AppName = "Cover Convo";
     const [open, setOpen] = React.useState(false);
