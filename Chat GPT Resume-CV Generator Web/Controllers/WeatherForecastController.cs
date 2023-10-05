@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
 {
@@ -28,6 +29,21 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Model dynamicData)
+        {
+            Console.WriteLine(dynamicData);
+            return new JsonResult(new { result = "Success" }); // Return a JSON response
+        }
+        public class Model
+        {
+            public string dynamicData { get; set; }
+            public override string ToString()
+            {
+                return dynamicData;
+            }
         }
     }
 }
