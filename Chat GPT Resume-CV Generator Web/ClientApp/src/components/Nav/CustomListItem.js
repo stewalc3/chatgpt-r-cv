@@ -3,10 +3,13 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function CustomListItem({ path, children,text }) {
+export default function CustomListItem({ path, children,text,click }) {
     const navigate = useNavigate();   
     const navigateTo = function (a) {
-        navigate(path);
+        if(click!=null)
+            click();
+        if(path!=null)
+            navigate(path);
     }
     return (
         <div onClick={navigateTo}>

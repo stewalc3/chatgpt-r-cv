@@ -12,15 +12,23 @@ import CustomListItem from "./CustomListItem";
 import CssBaseline from '@mui/material/CssBaseline';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { AppBar, ThemeProvider, createTheme } from '@mui/material';
+import LoginIcon from '@mui/icons-material/Login';
+import { AppBar, Avatar, ListItem, ListItemAvatar, ListItemIcon, ListItemText, ThemeProvider, createTheme } from '@mui/material';
 import PaidIcon from '@mui/icons-material/Paid';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Grid } from '@mui/material';
+import { GoogleLogin } from '@react-oauth/google';
 import './Nav.css';
+import { useState, useEffect } from 'react';
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+import { Logout } from '@mui/icons-material';
+import GoogleIcon from '@mui/icons-material/Google';
 
-const drawerWidth = 240;
+
+const drawerWidth = 288;
 
 const theme = createTheme();
 
@@ -43,6 +51,39 @@ const Main = ({ open, children }) => (
 );
 
 export default function NavBar({ children }) {
+   
+    
+    const [ user, setUser ] = useState([]);
+    const [ profile, setProfile ] = useState(null);
+    
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => {
+            setUser(codeResponse);
+            console.log("Successful Google Login");
+        },
+        onError: (error) => console.log('Login Failed:', error)
+    });
+    const logOut = () => {
+        googleLogout();
+        setProfile(null);
+    };
+    useEffect(
+        () => {
+            if (user) {
+                axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                        headers: {
+                            Authorization: `Bearer ${user.access_token}`,
+                            Accept: 'application/json'
+                        }
+                    })
+                    .then((res) => {
+                        setProfile(res.data);
+                    })
+                    .catch((err) => console.log(err));
+            }
+        },[ user ]
+    );
+
     const AppName = "Cover Convo";
     const [open, setOpen] = React.useState(false);
 
@@ -123,9 +164,26 @@ export default function NavBar({ children }) {
                     </div>
                     <div>
                         <Divider />
-                        <CustomListItem text="Sign Out">
+                       
+                                               
+                        {profile!=null ? (
+                            <div>
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar src={profile.picture}/>
+                                </ListItemAvatar>
+                                <ListItemText>{profile.name}</ListItemText>
+                            </ListItem>
+                            <CustomListItem text="Sign Out" click={logOut}>
                                 <LogoutIcon />
-                        </CustomListItem>
+                            </CustomListItem>
+                            </div>
+                        ):(
+                            <CustomListItem text="Sign In With Google" click={login}>
+                                <GoogleIcon/>
+                            </CustomListItem>
+                        )}
+                        
                         <CustomListItem text="Settings">
                             <SettingsIcon />
                         </CustomListItem>
