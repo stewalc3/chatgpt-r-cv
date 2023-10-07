@@ -26,7 +26,7 @@ import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { Logout } from '@mui/icons-material';
 import GoogleIcon from '@mui/icons-material/Google';
-
+import Cookies from "js-cookie"
 
 const drawerWidth = 288;
 
@@ -56,12 +56,39 @@ export default function NavBar({ children }) {
     const [ profile, setProfile ] = useState(null);
     const [localStorageLoaded, setLocalStorageLoaded] = useState(false); 
    
+    /*const sendGoogleAuth=function(auth){
+        const url = "/weatherforecast";
+        const data = auth;
 
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((responseData) => {
+            alert(JSON.stringify(responseData));
+            console.log(responseData); // This will log the server's response
+        })
+        .catch((error) => {
+            alert("Error:", error);
+            console.error("Error:", error);
+        });
+    }*/
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
             localStorage.setItem("googleToken",codeResponse.access_token);
+            Cookies.set("googleToken",codeResponse.access_token,{expires:codeResponse.expires_in});
             setUser(codeResponse);
+            console.log("code response",codeResponse);
             console.log("Successful Google Login");
             console.log("access token",user.access_token);
         },
@@ -91,6 +118,7 @@ export default function NavBar({ children }) {
 
     useEffect(() => {
         var gt = localStorage.getItem('googleToken');
+        gt=Cookies.get("googleToken");
         if (gt != null && gt !== "undefined" && gt !== "null" && !localStorageLoaded) {
           setUser({
             "access_token": gt

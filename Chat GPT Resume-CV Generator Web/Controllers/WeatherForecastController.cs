@@ -21,6 +21,10 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            foreach (var item in Request.Cookies)
+            {
+                Console.WriteLine($"{item.Key} : {item.Value}");
+            }
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -28,6 +32,22 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+        [HttpPost]
+        public JsonContent Google([FromBody] GoogleAuth auth)
+        {
+            throw new NotImplementedException();
+            Console.WriteLine(auth.access_token);
+            return null;
+        }
+        public class GoogleAuth
+        {
+            public string access_token { get; set; }
+            public string authuser { get; set; }
+            public int expires_in { get; set; }
+            public string prompt { get; set; }
+            public string scope { get; set; }
+            public string token_type { get; set; }
         }
     }
 }
