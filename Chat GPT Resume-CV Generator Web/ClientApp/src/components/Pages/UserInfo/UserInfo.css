@@ -12,3 +12,6 @@
 .lists > .col {
     min-width: 350px;
 }
+.lists{
+    margin-top: 20px;
+}

@@ -1,9 +1,9 @@
-﻿import { Box, ImageList } from '@mui/material';
-import TextField from '@mui/material/TextField';
+﻿import TextField from '@mui/material/TextField';
 import Education from "./Education"
 import "./UserInfo.css";
 
 import EditableList from './Editable List/EditableList';
+import DetailedList from './DetailedList/DetailedList';
 
 export default function UserInfo(){
     return (
@@ -37,7 +37,7 @@ export default function UserInfo(){
         </div>
         <div className='row lists'>
             <div className='col'>
-                <EditableList title="Skills"/>
+                <EditableList title="Skills" items={["C#","Java"]}/>
             </div>
             <div className='col'>
                 <EditableList title="Awards / Honors"/>
@@ -50,6 +50,9 @@ export default function UserInfo(){
             </div>
             <div className='col'>
                 <EditableList title="Certifications / Licences"/>
+            </div>
+            <div className='col'>
+                <DetailedList title="Education"/>
             </div>
         </div>
         

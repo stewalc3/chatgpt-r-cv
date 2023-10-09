@@ -17,8 +17,14 @@ export default function EditableList(props){
         }
     }, [props.title]);
 
-    const [items,setItems]=useState(["hi","hi2"]);
-    
+    const [items,setItems]=useState([]);
+    useEffect(() => {
+        if (props.items != null) {
+            setItems(props.items);
+        }
+    }, [props.title]);
+
+
     const handleDelete = (index) => {
         const updatedItems = [...items];
         updatedItems.splice(index, 1);
@@ -66,7 +72,7 @@ return (
                 </div>
                 <div className="col-auto">
                     <IconButton aria-controls="menu" aria-haspopup="true" onClick={popupMenuClick}>
-                        <MoreVertIcon />
+                    <MoreVertIcon sx={{fontSize:"35px"}}/>
                     </IconButton>
                     <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closePopup}>
                         <MenuItem onClick={handleDeleteAll}>Delete All</MenuItem>
@@ -74,13 +80,11 @@ return (
                 </div>
             </div>
             
-
-            
-            <div className="row" style={{margin:"0 10px"}}>
-                <div className="col">
+            <div className="row" style={{margin:"0px 0px 0 10px"}}>
+                <div className="col" style={{paddingRight:"0px"}}>
                     <TextField fullWidth label=" " variant="standard" onKeyDown={inputGiven} inputRef={textFieldRef}/>
                 </div>
-                <div className="col-auto" style={{paddingLeft:"0px"}}>
+                <div className="col-auto" style={{padding:"0px"}}>
                     <IconButton sx={{ marginTop: '8px' }}>
                         <AddIcon onClick={addItemButtonClick} style={{ fontSize: '37px' }} />
                     </IconButton>
