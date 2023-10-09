@@ -54,7 +54,7 @@ export default function NavBar({ children }) {
     
     const [ user, setUser ] = useState([]);
     const [ profile, setProfile ] = useState(null);
-    const [localStorageLoaded, setLocalStorageLoaded] = useState(false); 
+    const [cookiesLoaded, setCookiesLoaded] = useState(false); 
    
     /*const sendGoogleAuth=function(auth){
         const url = "/weatherforecast";
@@ -95,6 +95,7 @@ export default function NavBar({ children }) {
         onError: (error) => console.log('Login Failed:', error)
     });
     const logOut = () => {
+        Cookies.remove("googleToken");
         googleLogout();
         setProfile(null);
     };
@@ -109,7 +110,7 @@ export default function NavBar({ children }) {
                     })
                     .then((res) => {
                         setProfile(res.data);
-                        localStorageLoaded=true;
+                        cookiesLoaded=true;
                     })
                     .catch((err) => console.log(err));
             }
@@ -119,13 +120,13 @@ export default function NavBar({ children }) {
     useEffect(() => {
         var gt = localStorage.getItem('googleToken');
         gt=Cookies.get("googleToken");
-        if (gt != null && gt !== "undefined" && gt !== "null" && !localStorageLoaded) {
+        if (gt != null && gt !== "undefined" && gt !== "null" && !cookiesLoaded) {
           setUser({
             "access_token": gt
           });
-          setLocalStorageLoaded(true);
+          setCookiesLoaded(true);
         }
-      }, [localStorageLoaded]);
+      }, [cookiesLoaded]);
 
 
     const AppName = "Cover Convo";
@@ -190,7 +191,7 @@ export default function NavBar({ children }) {
                         </Box>
                         <Divider />
                         <List>
-                            <CustomListItem path="/" text="Create">
+                            <CustomListItem path="/create" text="Create">
                                 <AddBoxIcon />
                             </CustomListItem>
                             <CustomListItem path="/counter" text="Templates">

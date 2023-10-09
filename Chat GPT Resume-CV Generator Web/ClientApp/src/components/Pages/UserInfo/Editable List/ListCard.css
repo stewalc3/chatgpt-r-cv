@@ -1,0 +1,6 @@
+.list-item:hover .delete-icon{
+    visibility: visible;
+}
+.delete-icon{
+    visibility: collapse;
+}
