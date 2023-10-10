@@ -1,0 +1,6 @@
+.editableList:hover .more-icon{
+    visibility: visible;
+}
+.more-icon{
+    visibility: collapse;
+}

@@ -1,24 +1,60 @@
-import React, { Component } from "react";
-import { Card, IconButton, TextField, Typography } from "@mui/material";
+import React, { Component, createRef } from "react";
+import { Card, IconButton, Typography } from "@mui/material";
 //import ListCard from "./ListCard";
 import { CardBody, CardHeader } from "reactstrap";
 import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import ObjectComponent from "./Education/ObjectComponent";
 
 export default class DetailedList extends Component {
   constructor(props) {
     super(props);
-
-
+    console.log(this);
     this.state = {
       title: "Unnamed",
       items: [],
-      anchorEl: null,
     };
+
+    this.addItemButtonClick=this.addItemButtonClick.bind(this);
+    this.componentContainerRef=createRef();
   }
 
+  
+  handleDelete(comp) {
+    let i=this.state.items;
+    i.pop(i.indexOf(comp));
+       this.setState({items:i});
+  }  
+  
+   
+/**
+ * THIS IS HELD ON BY A GOD DAMN THREAD BECAUSE REACT DIDNT FEEL LIKE LINKING THE CLASS TO THE DAMN COMPONENT
+ * @returns the data
+ */
+  getData(){
+    console.log(this.componentContainerRef);
+    console.log([...this.componentContainerRef.current.querySelectorAll(".objectComponent")]);
+    
+    return [...this.componentContainerRef.current.querySelectorAll(".objectComponent")].map(e=>{
+      let labels=[...e.querySelectorAll("label")];  
+      let pairing=labels.map(h=>{
+        return {
+          "key":h.innerText,
+          "value":h.parentElement.querySelector("input").value
+        }
+        })
+      let ret={};
+      for(var i of pairing){
+        ret[i.key.toLowerCase().replace(" ","_")]=i.value;
+      }
+      console.log("pairing", pairing);
+      
+      return ret;
+    });
+  
+  }
   componentDidMount() {
     if (this.props.title != null) {
       this.setState({ title: this.props.title });
@@ -29,14 +65,13 @@ export default class DetailedList extends Component {
     }
   }
 
-  handleDelete = (index) => {
-    const updatedItems = [...this.state.items];
-    updatedItems.splice(index, 1);
-    this.setState({ items: updatedItems });
-  };
 
   addItemButtonClick() {
-    alert("not implemented");
+    //const newObject =new ObjectComponent({fields:this.props.fields,owner:this});
+//    const newObject = <ObjectComponent fields={this.props.fields} owner={this}/>;
+    //const newObject = <ObjectComponent fields={this.props.fields} owner={this} />;
+    //console.log(newObject);
+    this.setState({ items: [...this.state.items, 1] });
   };
 
 
@@ -68,7 +103,7 @@ export default class DetailedList extends Component {
             </div>
             <div className="col-auto" style={{ padding: "0px" }}>
               <IconButton>
-                <AddIcon onClick={this.addItemButtonClick}  sx={{fontSize:"35px"}}/>
+                <AddIcon onClick={this.addItemButtonClick} sx={{fontSize:"35px"}}/>
               </IconButton>
             </div>
             <div className="col-auto" style={{paddingLeft:0}}>
@@ -84,10 +119,12 @@ export default class DetailedList extends Component {
         </CardHeader>
         <hr></hr>
         <CardBody>
-          <div style={{ maxHeight: "200px", overflowY: "auto" }}>
-            {/*items.map((item, index) => (
-              <ListCard key={index} value={item} onDelete={() => this.handleDelete(index)} />
-            ))*/}
+          <div style={{ maxHeight: "500px", overflowY: "auto" }} ref={this.componentContainerRef}>
+            {items.map(e=>(
+            <div className="objectComponent">
+            <ObjectComponent fields={this.props.fields} owner={this}/>
+            </div>)
+            )}
           </div>
           {items.length === 0 ? (
             <Typography variant="body2" sx={{ textAlign: "center", padding: "5px", marginBottom: "5px" }}>

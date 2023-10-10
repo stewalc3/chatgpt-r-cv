@@ -1,0 +1,15 @@
+.hover-card:hover .button-to-hide{
+    display: block;
+}
+.button-to-hide{
+    display: none;
+}
+.clickable{
+    cursor: pointer;
+}
+.text-stack{
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    width: 100%; 
+}
