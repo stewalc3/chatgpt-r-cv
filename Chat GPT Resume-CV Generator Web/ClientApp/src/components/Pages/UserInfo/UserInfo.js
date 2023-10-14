@@ -95,18 +95,11 @@ class UserInfo extends Component {
                 <div className='col'>
                         <EditableList title="Skills" items={["C#", "Java"]} ref={this.SkillsRef}/>
                     </div>
-                    <div className='col'>
-                        <EditableList title="Awards / Honors" ref={this.AwardsHonorsRef} />
-                    </div>
+                    
                     <div className='col'>
                         <EditableList title="Extracurricular Activities" ref={this.ExtracurricularActivitiesRef} />
                     </div>
-                    <div className='col'>
-                        <EditableList title="Publications" ref={this.PublicationsRef} />
-                    </div>
-                    <div className='col'>
-                        <EditableList title="Certifications / Licences" ref={this.CertificationsLicencesRef} />
-                    </div>
+                    
                     <div className='col'>
                         <DetailedList title="Education" fields={["School", "Gpa", "Degree", "Start Date", "End Date"]} ref={this.EducationRef}/>
                     </div>
@@ -117,6 +110,17 @@ class UserInfo extends Component {
                         <DetailedList title="Work Experience" fields={["Job Title", "Company Name","Address", "Start Date","End Date", "Responsibilities"]}  ref={this.WorkExperienceRef}/>
                     </div>
                 </div>
+                <div className='row'>
+                        <div className='col'>
+                            <EditableList title="Publications" ref={this.PublicationsRef} />
+                        </div>
+                        <div className='col'>
+                            <EditableList title="Certifications / Licences" ref={this.CertificationsLicencesRef} />
+                        </div>
+                        <div className='col'>
+                            <EditableList title="Awards / Honors" ref={this.AwardsHonorsRef} />
+                        </div>
+                    </div>
             </div>
         );
     }
