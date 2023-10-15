@@ -29,8 +29,7 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
             {
                 if(item.Key== "googleToken")
                 {  
-                    string userAccessToken = item.Value;
-                    Console.WriteLine(Google_Authentication.GoogleAuthenticator.GetEmailFromToken(userAccessToken));
+                    Console.WriteLine(Google_Authentication.GoogleAuthenticator.GetEmailFromToken(item.Value));
                 }
             }
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
