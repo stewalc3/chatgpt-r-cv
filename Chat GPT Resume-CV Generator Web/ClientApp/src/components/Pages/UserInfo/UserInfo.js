@@ -61,34 +61,34 @@ class UserInfo extends Component {
                 <h4>General</h4>
                 <div className='row'>
                     <div className='col'>
-                        <TextField id="nameInput" label="Name" variant="outlined" fullWidth/>
+                        <TextField id="nameInput" label="Name" variant="outlined" fullWidth inputProps={{maxLength:20}}/>
                     </div>
                     <div className='col'>
-                        <TextField id="phoneInput" label="Phone" variant="outlined" fullWidth />
+                        <TextField id="phoneInput" label="Phone" variant="outlined" fullWidth inputProps={{ maxLength: 15 }} />
                     </div>
                     <div className='col'>
-                        <TextField id="emailInput" label="Email" variant="outlined" fullWidth />
+                        <TextField id="emailInput" label="Email" variant="outlined" fullWidth inputProps={{ maxLength: 254 }} />
                     </div>
-                </div>
-                <h4>Address</h4>
-                <div className='row'>
-                    <div className='col'>
-                        <TextField id="streetInput" label="Street" variant="outlined" fullWidth />
                     </div>
-                    <div className='col'>
-                        <TextField id="cityInput" label="City" variant="outlined" fullWidth />
-                    </div>
-                    <div className='col'>
-                        <TextField id="stateInput" label="State" variant="outlined" fullWidth />
-                    </div>
-                    <div className='col'>
-                        <TextField id="zipInput" label="Zip" variant="outlined" fullWidth />
-                    </div>
+                    <h4>Address</h4>
+                    <div className='row'>
+                        <div className='col'>
+                        <TextField id="streetInput" label="Street" variant="outlined" fullWidth inputProps={{ maxLength: 100 }} />
+                        </div>
+                        <div className='col'>
+                        <TextField id="cityInput" label="City" variant="outlined" fullWidth inputProps={{ maxLength: 50 }} />
+                        </div>
+                        <div className='col'>
+                        <TextField id="stateInput" label="State" variant="outlined" fullWidth inputProps={{ maxLength: 2 }} />
+                        </div>
+                        <div className='col'>
+                        <TextField id="zipInput" label="Zip" variant="outlined" fullWidth inputProps={{ maxLength: 10 }} />
+                        </div>
                 </div>
                 <h4>About Me</h4>
                 <div className='row'>
                     <div className='col'>
-                        <TextField id="about_meInput" label="General Info About Me" fullWidth variant='outlined' maxRows={5} minRows={3} multiline />
+                        <TextField id="about_meInput" label="General Info About Me" fullWidth variant='outlined' maxRows={5} minRows={3} multiline inputProps={{ maxLength: 805 }}/>
                     </div>
                 </div>
                 <div className='row lists'>
