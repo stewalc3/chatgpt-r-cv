@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Oauth2.v2;
+using Google.Apis.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
 {
@@ -23,7 +27,11 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
         {
             foreach (var item in Request.Cookies)
             {
-                Console.WriteLine($"{item.Key} : {item.Value}");
+                if(item.Key== "googleToken")
+                {  
+                    string userAccessToken = item.Value;
+                    Console.WriteLine(Google_Authentication.GoogleAuthenticator.GetEmailFromToken(userAccessToken));
+                }
             }
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
