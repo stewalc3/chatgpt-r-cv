@@ -112,7 +112,7 @@ export default function NavBar({ children }) {
                         setProfile(res.data);
                         cookiesLoaded=true;
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.error(err));
             }
         },[ user ]
     );

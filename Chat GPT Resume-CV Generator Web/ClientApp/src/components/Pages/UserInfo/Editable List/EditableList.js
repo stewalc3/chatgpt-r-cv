@@ -11,12 +11,13 @@ import "./EditableList.css";
 class EditableList extends Component {
   constructor(props) {
     super(props);
-
     this.textFieldRef = React.createRef();
-
+    this.maxItems=props.maxItems;
+    this.maxTextLength=this.props.maxTextLength;
     this.state = {
       title: "Unnamed",
       items: [],
+      errorText:undefined,
       anchorEl: null,
     };
     //this.maxItems=this.props.maxItems===undefined? 999:this.props.maxItems;
@@ -25,7 +26,14 @@ class EditableList extends Component {
   getData(){
     return this.state.items;
   }
-
+  setData(items){
+    this.setState({items:items});
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.items !== prevProps.items) {
+      this.setState({ items: this.props.items });
+    }
+  }
   componentDidMount() {
     if (this.props.title != null) {
       this.setState({ title: this.props.title });
@@ -42,20 +50,31 @@ class EditableList extends Component {
     this.setState({ items: updatedItems });
   };
 
+  errorMessage=(message)=>{
+    this.setState({isError:true,errorText:message});
+    setTimeout(()=>{
+      this.setState({isError:false,errorText:null});
+    },2000);
+  }
+
   addItemButtonClick = () => {
     this.inputGiven({
       target: this.textFieldRef.current,
       code: "Enter",
     });
   };
-
+  
   inputGiven = (args) => {
     let input = args.target.value;
-    if (args.code === "Enter" && input.length > 0 && !this.state.items.includes(input)) {
-      this.setState((prevState) => ({
-        items: [...prevState.items, input],
-      }));
-      args.target.value = "";
+    if(this.maxItems>this.state.items.length){
+      if (args.code === "Enter" && input.length > 0 && !this.state.items.includes(input)) {
+        this.setState((prevState) => ({
+          items: [...prevState.items, input],
+        }));
+        args.target.value = "";
+      }
+    }else if(args.code==="Enter"){
+      this.errorMessage("Max Items Reached");
     }
   };
 
@@ -94,7 +113,7 @@ class EditableList extends Component {
           </div>
           <div className="row" style={{ margin: "0px 0px 0 10px" }}>
             <div className="col" style={{ paddingRight: "0px" }}>
-              <TextField fullWidth label=" " variant="standard" onKeyDown={this.inputGiven} inputRef={this.textFieldRef} />
+              <TextField fullWidth label=" " variant="standard" onKeyDown={this.inputGiven} inputRef={this.textFieldRef} error={this.state.isError} helperText={this.state.errorText} inputProps={{maxLength:this.maxTextLength}} />
             </div>
             <div className="col-auto" style={{ padding: "0px" }}>
               <IconButton sx={{ marginTop: '8px' }}>

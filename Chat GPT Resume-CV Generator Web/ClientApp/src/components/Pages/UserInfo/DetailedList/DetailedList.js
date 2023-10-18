@@ -11,7 +11,7 @@ import ObjectComponent from "./Education/ObjectComponent";
 export default class DetailedList extends Component {
   constructor(props) {
     super(props);
-    console.log(this);
+    //console.log(this);
     this.state = {
       title: "Unnamed",
       items: [],
@@ -34,8 +34,8 @@ export default class DetailedList extends Component {
  * @returns the data
  */
   getData(){
-    console.log(this.componentContainerRef);
-    console.log([...this.componentContainerRef.current.querySelectorAll(".objectComponent")]);
+   // console.log(this.componentContainerRef);
+    //console.log([...this.componentContainerRef.current.querySelectorAll(".objectComponent")]);
     
     return [...this.componentContainerRef.current.querySelectorAll(".objectComponent")].map(e=>{
       let labels=[...e.querySelectorAll("label")];  
@@ -67,10 +67,6 @@ export default class DetailedList extends Component {
 
 
   addItemButtonClick() {
-    //const newObject =new ObjectComponent({fields:this.props.fields,owner:this});
-//    const newObject = <ObjectComponent fields={this.props.fields} owner={this}/>;
-    //const newObject = <ObjectComponent fields={this.props.fields} owner={this} />;
-    //console.log(newObject);
     this.setState({ items: [...this.state.items, 1] });
   };
 
