@@ -11,6 +11,7 @@ import ObjectComponent from "./Education/ObjectComponent";
 export default class DetailedList extends Component {
   constructor(props) {
     super(props);
+    this.placeholderItem=1;
     //console.log(this);
     this.state = {
       title: "Unnamed",
@@ -40,14 +41,21 @@ export default class DetailedList extends Component {
     return [...this.componentContainerRef.current.querySelectorAll(".objectComponent")].map(e=>{
       let labels=[...e.querySelectorAll("label")];  
       let pairing=labels.map(h=>{
+        try{
+          let v1=h.parentElement.querySelector("input").value;
+
         return {
           "key":h.innerText,
-          "value":h.parentElement.querySelector("input").value
+          "value":v1.length==0? null:v1
+        }
+        }catch{
+          let v2=h.parentElement.querySelector("textarea").value;
+          return {"key":h.innerText,"value":v2.length==0?null:v2}
         }
         })
       let ret={};
       for(var i of pairing){
-        ret[i.key.toLowerCase().replace(" ","_")]=i.value;
+        ret[i.key.toLowerCase().replace(" ","_")]=i.value;//IF ANY ANY THIS KEY STUFF CHANGES, THEN IT NEEDS TO BE CHANGED IN OBJECT COMPONENT TOO in componentDidMount
       }
       console.log("pairing", pairing);
       
@@ -61,13 +69,18 @@ export default class DetailedList extends Component {
     }
 
     if (this.props.items != null) {
-      this.setState({ items: this.props.items });
+      this.setState({ items: this.props.items});
     }
   }
 
-
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.items !== prevProps.items) {
+      //console.log("things a changing:",this.props.items);
+      this.setState({items:this.props.items});
+    }
+  }
   addItemButtonClick() {
-    this.setState({ items: [...this.state.items, 1] });
+    this.setState({ items: [...this.state.items, this.placeholderItem] });
   };
 
 
@@ -118,7 +131,9 @@ export default class DetailedList extends Component {
           <div style={{ maxHeight: "500px", overflowY: "auto" }} ref={this.componentContainerRef}>
             {items.map(e=>(
             <div className="objectComponent">
-            <ObjectComponent fields={this.props.fields} owner={this}/>
+              
+              {(e===this.placeholderItem)&&(<ObjectComponent fields={this.props.fields} owner={this}/>)}              
+              {(e!==this.placeholderItem)&&(<ObjectComponent fields={this.props.fields} values={e} owner={this}/>)}              
             </div>)
             )}
           </div>

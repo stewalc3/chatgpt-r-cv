@@ -1,22 +1,30 @@
 import React, { createRef } from "react";
 import { Card, Stack, TextField, CardContent, Button } from "@mui/material";
 import "./Card.css";
+import { readyException } from "jquery";
 
 export default class ObjectComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editing: true,
+      editing: props.values==null,
       fields: {},
     };
-
+    if(props.values!=null){
+      console.log(props.values);
+      this.state.fields=props.values;
+      this.dataLoaded=false;
+    }
     this.cardRef = createRef();
   }
-
   componentDidMount() {
     const fields = {};
+    console.log("Mounted:",this.props.values, this.props.fields);
     this.props.fields.forEach((field) => {
-      fields[field.name] = "";
+      if(this.props.values!=null)
+        fields[field.name] = this.props.values[field.name.toLowerCase().replace(" ","_")];
+      else
+        fields[field.name] = "";
     });
     this.setState({ fields });
   }
@@ -35,6 +43,7 @@ export default class ObjectComponent extends React.Component {
 
   toggleEdit = () => {
     this.setState({ editing: !this.state.editing });
+    console.log("edit toggled",this.state.fields);
   };
 
   editClick = () => {
@@ -42,11 +51,10 @@ export default class ObjectComponent extends React.Component {
       this.toggleEdit();
     }
   };
-
   render() {
     const { editing, fields } = this.state;
 
-    return (
+    let ret= (
       <div className={editing ? "" : "clickable"} onClick={this.editClick} ref={this.cardRef}>
         <Card sx={{ margin: "5px 5px" }}>
           <CardContent>
@@ -60,15 +68,15 @@ export default class ObjectComponent extends React.Component {
                 </Button>
               </div>
               {this.props.fields.map((field) => (
-                <TextField
-                  key={field.name}
-                  label={field.name}
-                  inputProps={{ maxLength: field.maxLength }}
-                  onChange={this.handleInputChange(field.name)}
-                  value={fields[field.name]}
-                  multiline={field.multiline}
-                  rows={field.multiline ? 4 : undefined}
-                />
+                  <TextField
+                    key={field.name}
+                    label={field.name}
+                    inputProps={{ maxLength: field.maxLength }}
+                    onChange={this.handleInputChange(field.name)}
+                    value={fields[field.name]}
+                    multiline={field.multiline}
+                    rows={field.multiline ? 4 : undefined}
+                  />
               ))}
             </Stack>
             <Stack spacing={1} className="text-stack" sx={{ display: !editing ? "" : "none" }}>
@@ -82,5 +90,6 @@ export default class ObjectComponent extends React.Component {
         </Card>
       </div>
     );
+    return ret;
   }
 }

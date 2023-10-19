@@ -39,7 +39,12 @@ class UserInfo extends Component {
                 extracurricular_activities:[],
                 publications:[],
                 certifications_licences:[],
-                awards_honors:[]
+                awards_honors:[],
+
+                education:[],
+                projects:[],
+                work_experience:[],
+                references:[]
             }
             
           };
@@ -64,9 +69,10 @@ class UserInfo extends Component {
         ["certifications_licences",this.CertificationsLicencesRef],
         ["education",this.EducationRef],
         ["references",this.ReferencesRef],
-        ["work_experience",this.WorkExperienceRef]
+        ["work_experience",this.WorkExperienceRef],
+        ["projects",this.ProjectsRef]
     ].forEach(e=>{
-        //console.log(e[1]);
+        console.log(e[1]);
         ret[e[0]]=e[1].current.getData();
     });
 
@@ -113,7 +119,7 @@ class UserInfo extends Component {
                         <TextField id="stateInput" value={this.state.values.state} name="state" label="State" variant="outlined" fullWidth inputProps={{ maxLength: 29 }} onInput={(e) => this.setValue(e.target.name, e.target.value)}/>
                         </div>
                         <div className='col'>
-                        <TextField id="zipInput" value={this.state.values.zip} name="zip" label="Zip" variant="outlined" fullWidth inputProps={{ maxLength:  5}}/>
+                        <TextField id="zipInput" value={this.state.values.zip} name="zip" label="Zip" variant="outlined" fullWidth inputProps={{ maxLength:  5}} onInput={(e) => this.setValue(e.target.name, e.target.value)}/>
                         </div>
                 </div>
                 <h4>About Me</h4>
@@ -132,7 +138,7 @@ class UserInfo extends Component {
                     </div>
                     
                     <div className='col'>
-                        <DetailedList title="Education" fields={[{
+                        <DetailedList title="Education" items={this.state.values.education} fields={[{
                             "name":"School",
                             "maxLength":50
                             },{
@@ -150,7 +156,7 @@ class UserInfo extends Component {
                             },]} ref={this.EducationRef}/>
                     </div>
                     <div className='col'>
-                        <DetailedList title="References" fields={[
+                        <DetailedList title="References" items={this.state.values.references} fields={[
                             {
                             "name":"Name",
                             "maxLength":30
@@ -169,7 +175,7 @@ class UserInfo extends Component {
                             },]} ref={this.ReferencesRef}/>
                     </div>
                     <div className='col'>
-                        <DetailedList title="Work Experience" fields={[{
+                        <DetailedList title="Work Experience" items={this.state.values.work_experience} fields={[{
                             "name":"Job Title",
                             "maxLength":30
                             },{
@@ -177,7 +183,7 @@ class UserInfo extends Component {
                             "maxLength":30
                             },{
                             "name":"Address",
-                            "maxLength":30
+                            "maxLength":100
                             },{
                             "name":"Start Date",
                             "maxLength":20
@@ -191,12 +197,12 @@ class UserInfo extends Component {
                             },]}  ref={this.WorkExperienceRef}/>
                     </div>
                     <div className='col'>
-                        <DetailedList title="Projects" maxItems={5} fields={[{
+                        <DetailedList title="Projects" maxItems={5} items={this.state.values.projects} fields={[{
                             "name":"Name",
-                            "maxLength":25
+                            "maxLength":50
                             },{
                             "name":"Description",
-                            "maxLength":150,
+                            "maxLength":500,
                             multiline:true
                             },{
                             "name":"Link",
