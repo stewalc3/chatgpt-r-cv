@@ -10,7 +10,7 @@ export default function Create(){
     let description = getParam("Description");
 
     return (<div className='container'>
-
+        <form>
         <h4>Job Info</h4>
         <div className='row'>
             <div className='col'>
@@ -28,9 +28,9 @@ export default function Create(){
        </div>
        <div className='row'>
             <div className='col'>
-            <button className='btn btn-primary'>hi</button>
-            
+            <button className='btn btn-primary' type='submit'>Generate Cover Letter</button>
             </div>
         </div>
+        </form>
     </div>);
 }

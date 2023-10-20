@@ -98,7 +98,7 @@ class UserInfo extends Component {
                 <h4>General</h4>
                 <div className='row'>
                     <div className='col'>
-                    <TextField id="nameInput" name="name" value={this.state.values.name} label="Name" variant="outlined" fullWidth inputProps={{maxLength:20}} onInput={(e) => this.setValue(e.target.name, e.target.value)}/>
+                    <TextField id="nameInput" name="name" value={this.state.values.name} label="Name" variant="outlined" fullWidth inputProps={{maxLength:50}} onInput={(e) => this.setValue(e.target.name, e.target.value)}/>
                     </div>
                     <div className='col'>
                     <TextField id="phoneInput" value={this.state.values.phone} name="phone" label="Phone" variant="outlined" fullWidth inputProps={{ maxLength: 15 }} onInput={(e) => this.setValue(e.target.name, e.target.value)}/>
@@ -159,13 +159,13 @@ class UserInfo extends Component {
                         <DetailedList title="References" items={this.state.values.references} fields={[
                             {
                             "name":"Name",
-                            "maxLength":30
+                            "maxLength":50
                             },{
                             "name":"Title",
-                            "maxLength":30
+                            "maxLength":50
                             },{
                             "name":"Email",
-                            "maxLength":20
+                            "maxLength":50
                             },{
                             "name":"Phone",
                             "maxLength":20
@@ -177,10 +177,10 @@ class UserInfo extends Component {
                     <div className='col'>
                         <DetailedList title="Work Experience" items={this.state.values.work_experience} fields={[{
                             "name":"Job Title",
-                            "maxLength":30
+                            "maxLength":50
                             },{
                             "name":"Company Name",
-                            "maxLength":30
+                            "maxLength":50
                             },{
                             "name":"Address",
                             "maxLength":100
@@ -206,7 +206,7 @@ class UserInfo extends Component {
                             multiline:true
                             },{
                             "name":"Link",
-                            "maxLength":40
+                            "maxLength":50
                             },{
                             "name":"Start Date",
                             "maxLength":20
@@ -218,13 +218,13 @@ class UserInfo extends Component {
                 </div>
                 <div className='row'>
                         <div className='col'>
-                            <EditableList title="Publications" items={this.state.values.publications} ref={this.PublicationsRef} maxItems={5} maxTextLength={30}/>
+                            <EditableList title="Publications" items={this.state.values.publications} ref={this.PublicationsRef} maxItems={5} maxTextLength={50}/>
                         </div>
                         <div className='col'>
-                            <EditableList title="Certifications / Licences" items={this.state.values.certifications_licences} ref={this.CertificationsLicencesRef} maxItems={5} maxTextLength={30} />
+                            <EditableList title="Certifications / Licences" items={this.state.values.certifications_licences} ref={this.CertificationsLicencesRef} maxItems={5} maxTextLength={50} />
                         </div>
                         <div className='col'>
-                            <EditableList title="Awards / Honors" items={this.state.values.awards_honors} ref={this.AwardsHonorsRef} maxItems={5} maxTextLength={30}/>
+                            <EditableList title="Awards / Honors" items={this.state.values.awards_honors} ref={this.AwardsHonorsRef} maxItems={5} maxTextLength={50}/>
                         </div>
                     </div>
             </div>
