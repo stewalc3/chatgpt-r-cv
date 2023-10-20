@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
 {
-    [Route("UserInfo")]
+    [Route("/UserInfo")]
     [ApiController]
     public class UserInfoController : ControllerBase
     {
         [HttpPost]
+        [Route("/UserInfo")]
         public IActionResult Post([FromBody] UserInfo data)
         {
             Console.WriteLine(data.name);
@@ -23,7 +24,7 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
             Console.WriteLine("yes!");
             Console.WriteLine(data.name);
             // Process the JSON data here
-            return Ok();
+            return new JsonResult("{result:\"hello\"}");
         }
         public class Test
         {
