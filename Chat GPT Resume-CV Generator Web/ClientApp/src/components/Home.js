@@ -7,6 +7,7 @@ export class Home extends Component {
    
     return (
       <div>
+        hi
         <h1> <a href="https://blog.logrocket.com/guide-adding-google-login-react-app/">https://blog.logrocket.com/guide-adding-google-login-react-app/</a></h1>
         <p>Welcome to your new single-page application, built with:</p>
         <ul>

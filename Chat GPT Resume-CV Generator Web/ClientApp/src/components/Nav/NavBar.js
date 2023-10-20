@@ -56,32 +56,6 @@ export default function NavBar({ children }) {
     const [ profile, setProfile ] = useState(null);
     const [cookiesLoaded, setCookiesLoaded] = useState(false); 
    
-    /*const sendGoogleAuth=function(auth){
-        const url = "/weatherforecast";
-        const data = auth;
-
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((responseData) => {
-            alert(JSON.stringify(responseData));
-            console.log(responseData); // This will log the server's response
-        })
-        .catch((error) => {
-            alert("Error:", error);
-            console.error("Error:", error);
-        });
-    }*/
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
@@ -101,7 +75,7 @@ export default function NavBar({ children }) {
     };
     useEffect(
         () => {
-            if (user) {
+            if (user && user.access_token!=undefined && user.access_token+""!='undefined') {
                 axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
                         headers: {
                             Authorization: `Bearer ${user.access_token}`,
@@ -110,7 +84,7 @@ export default function NavBar({ children }) {
                     })
                     .then((res) => {
                         setProfile(res.data);
-                        cookiesLoaded=true;
+                        setCookiesLoaded(true);
                     })
                     .catch((err) => console.error(err));
             }
@@ -120,7 +94,7 @@ export default function NavBar({ children }) {
     useEffect(() => {
         var gt = localStorage.getItem('googleToken');
         gt=Cookies.get("googleToken");
-        if (gt != null && gt !== "undefined" && gt !== "null" && !cookiesLoaded) {
+        if (gt != null && gt!==undefined && gt !== "undefined" && gt !== "null" && !cookiesLoaded) {
           setUser({
             "access_token": gt
           });

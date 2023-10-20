@@ -9,14 +9,6 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
     [ApiController]
     public class UserInfoController : ControllerBase
     {
-      /*  [HttpPost]
-        [Route("/UserInfo")]
-        public IActionResult Post([FromBody] UserInfo data)
-        {
-            Console.WriteLine(data.name);
-            // Process the JSON data here
-            return Ok();
-        }*/
         [HttpPost]
         public IActionResult Post([FromBody] Model data)
         {

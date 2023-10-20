@@ -67,7 +67,7 @@ class UserInfo extends Component {
             this.showErrorMessage("test", "error");
 
             // Construct your JSON data object
-            let dataToSend = this.getData();
+            var dataToSend = this.getData();
             dataToSend={
                 name:"nick"
             };
