@@ -5,30 +5,34 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
 {
-    [Route("/UserInfo")]
+   [Route("[controller]")]
     [ApiController]
     public class UserInfoController : ControllerBase
     {
-        [HttpPost]
+      /*  [HttpPost]
         [Route("/UserInfo")]
         public IActionResult Post([FromBody] UserInfo data)
         {
             Console.WriteLine(data.name);
             // Process the JSON data here
             return Ok();
-        }
+        }*/
         [HttpPost]
-        public IActionResult Post([FromBody] Test data)
+        public IActionResult Post([FromBody] Model data)
         {
             
             Console.WriteLine("yes!");
-            Console.WriteLine(data.name);
+            Console.WriteLine(data.dynamicData);
             // Process the JSON data here
             return new JsonResult("{result:\"hello\"}");
         }
-        public class Test
+        public class Model
         {
-            public string? name { get; set; }
+            public string dynamicData { get; set; }
+            public override string ToString()
+            {
+                return dynamicData;
+            }
         }
     }
 }
