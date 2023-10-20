@@ -57,7 +57,7 @@ export default class DetailedList extends Component {
       for(var i of pairing){
         ret[i.key.toLowerCase().replace(" ","_")]=i.value;//IF ANY ANY THIS KEY STUFF CHANGES, THEN IT NEEDS TO BE CHANGED IN OBJECT COMPONENT TOO in componentDidMount
       }
-      console.log("pairing", pairing);
+      //console.log("pairing", pairing);
       
       return ret;
     });

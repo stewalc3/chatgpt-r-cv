@@ -87,7 +87,7 @@ class EditableList extends Component {
   };
 
   handleDeleteAll = () => {
-    console.log('Delete All clicked');
+    //console.log('Delete All clicked');
     this.setState({ items: [] });
     this.closePopup();
   };

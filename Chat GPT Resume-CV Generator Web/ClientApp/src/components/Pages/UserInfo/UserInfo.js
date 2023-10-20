@@ -4,8 +4,9 @@ import "./UserInfo.css";
 import EditableList from './Editable List/EditableList';
 import DetailedList from './DetailedList/DetailedList';
 import { createRef } from 'react';
-import { create } from '@mui/material/styles/createTransitions';
-
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 class UserInfo extends Component {
     constructor(props) {
         super(props);
@@ -45,12 +46,58 @@ class UserInfo extends Component {
                 projects:[],
                 work_experience:[],
                 references:[]
-            }
-            
+            },
+            snackbarVisiblity:false,
+            snackbarText:"Error",
+            snackbarSeverity:"error"
           };
+
+        this.snackbarRef=createRef();
+    }
+    showErrorMessage(message,severity){
+        this.setState({
+            snackbarVisiblity:true,
+            snackbarText:message,
+            snackbarSeverity:severity
+        });
+    }
+    saveData=async ()=>{
+        console.log("saving data");
+        try {
+            this.showErrorMessage("test", "error");
+
+            // Construct your JSON data object
+            let dataToSend = this.getData();
+            dataToSend={
+                name:"nick"
+            };
+            fetch('UserInfo/Post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // You may need to include authentication headers if required.
+                },
+                body: JSON.stringify(dataToSend), // Convert the data object to a JSON string
+            })
+            .then(response => response.json())
+            .then(responseData => {
+                // Handle the response from the server if needed
+                this.showErrorMessage("yay", "success");
+            })
+            .catch(error => {
+                console.error(error);
+                this.showErrorMessage("error 2.0 " + error, "error");
+                console.log(dataToSend);
+                // Handle any errors that occur during the request
+            });
+
+        } catch (ex) {
+            this.showErrorMessage("Unable to save data", "error");
+            console.error(ex);
+        }
     }
     setData(data){
-        this.setState({values:data});
+        this.setState({values:data});        
     }
     getData(){
         let ret = {};
@@ -72,7 +119,7 @@ class UserInfo extends Component {
         ["work_experience",this.WorkExperienceRef],
         ["projects",this.ProjectsRef]
     ].forEach(e=>{
-        console.log(e[1]);
+       // console.log(e[1]);
         ret[e[0]]=e[1].current.getData();
     });
 
@@ -86,10 +133,20 @@ class UserInfo extends Component {
           },
         }));
       };
-    
+    snackbarHandleClose = (event, reason) => {
+        this.setState({snackbarVisiblity:false});
+    }
     render() {
         return (
             <div className='container'>
+                
+                <Button  onClick={this.saveData}>Save</Button>
+                
+                <Snackbar open={this.state.snackbarVisiblity} onClose={this.snackbarHandleClose} autoHideDuration={6000} ref={this.snackbarRef} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
+                    <Alert onClose={this.snackbarHandleClose} severity={this.state.snackbarSeverity} sx={{minWidth:"300px" }}>
+                        {this.state.snackbarText}
+                    </Alert>
+                </Snackbar>
                 <p>To do:</p>
                 <ul>
                     <li>add detailed list limits</li>
@@ -98,7 +155,7 @@ class UserInfo extends Component {
                 <h4>General</h4>
                 <div className='row'>
                     <div className='col'>
-                    <TextField id="nameInput" name="name" value={this.state.values.name} label="Name" variant="outlined" fullWidth inputProps={{maxLength:50}} onInput={(e) => this.setValue(e.target.name, e.target.value)}/>
+                    <TextField id="nameInput" name="name" value={this.state.values.name} label="Name" variant="outlined" fullWidth inputProps={{maxLength:50}} onInput={(e) => this.setValue(e.target.name, e.target.value)} ref={this.nameRef}/>
                     </div>
                     <div className='col'>
                     <TextField id="phoneInput" value={this.state.values.phone} name="phone" label="Phone" variant="outlined" fullWidth inputProps={{ maxLength: 15 }} onInput={(e) => this.setValue(e.target.name, e.target.value)}/>

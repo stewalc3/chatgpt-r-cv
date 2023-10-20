@@ -27,8 +27,8 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
         {
             foreach (var item in Request.Cookies)
             {
-                if(item.Key== "googleToken")
-                {  
+                if (item.Key == "googleToken")
+                {
                     Console.WriteLine(Google_Authentication.GoogleAuthenticator.GetEmailFromToken(item.Value));
                 }
             }
@@ -39,22 +39,6 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
-        }
-        [HttpPost]
-        public JsonContent Google([FromBody] GoogleAuth auth)
-        {
-            throw new NotImplementedException();
-            Console.WriteLine(auth.access_token);
-            return null;
-        }
-        public class GoogleAuth
-        {
-            public string access_token { get; set; }
-            public string authuser { get; set; }
-            public int expires_in { get; set; }
-            public string prompt { get; set; }
-            public string scope { get; set; }
-            public string token_type { get; set; }
         }
     }
 }

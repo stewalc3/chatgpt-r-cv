@@ -19,7 +19,7 @@ export default class ObjectComponent extends React.Component {
   }
   componentDidMount() {
     const fields = {};
-    console.log("Mounted:",this.props.values, this.props.fields);
+    //console.log("Mounted:",this.props.values, this.props.fields);
     this.props.fields.forEach((field) => {
       if(this.props.values!=null)
         fields[field.name] = this.props.values[field.name.toLowerCase().replace(" ","_")];
@@ -43,7 +43,7 @@ export default class ObjectComponent extends React.Component {
 
   toggleEdit = () => {
     this.setState({ editing: !this.state.editing });
-    console.log("edit toggled",this.state.fields);
+   // console.log("edit toggled",this.state.fields);
   };
 
   editClick = () => {
