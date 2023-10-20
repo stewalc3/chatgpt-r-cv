@@ -40,5 +40,21 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Model dynamicData)
+        {
+            Console.WriteLine(dynamicData);
+            return new JsonResult(new { result = "Success" }); // Return a JSON response
+        }
+        public class Model
+        {
+            public string dynamicData { get; set; }
+            public override string ToString()
+            {
+                return dynamicData;
+            }
+        }
+
     }
 }
