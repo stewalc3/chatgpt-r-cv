@@ -1,7 +1,6 @@
 import React, { createRef } from "react";
 import { Card, Stack, TextField, CardContent, Button } from "@mui/material";
 import "./Card.css";
-import { readyException } from "jquery";
 
 export default class ObjectComponent extends React.Component {
   constructor(props) {

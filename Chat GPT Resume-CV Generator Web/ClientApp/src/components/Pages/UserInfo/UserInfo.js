@@ -64,14 +64,12 @@ class UserInfo extends Component {
     saveData=async ()=>{
         console.log("saving data");
         try {
-            this.showErrorMessage("test", "error");
+//            this.showErrorMessage("test", "error");
 
             // Construct your JSON data object
             var dataToSend = this.getData();
-            dataToSend={
-                name:"nick"
-            };
-            fetch('UserInfo/Post', {
+            console.log("data to be sent: ",dataToSend);
+            fetch('userinfo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,6 +79,7 @@ class UserInfo extends Component {
             })
             .then(response => response.json())
             .then(responseData => {
+                console.log(responseData);
                 // Handle the response from the server if needed
                 this.showErrorMessage("yay", "success");
             })

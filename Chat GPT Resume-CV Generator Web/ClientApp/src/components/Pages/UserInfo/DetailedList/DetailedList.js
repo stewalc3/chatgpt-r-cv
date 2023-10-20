@@ -50,7 +50,7 @@ export default class DetailedList extends Component {
         }
         }catch{
           let v2=h.parentElement.querySelector("textarea").value;
-          return {"key":h.innerText,"value":v2.length==0?null:v2}
+          return {"key":h.innerText,"value":v2.length==0? null:v2}
         }
         })
       let ret={};

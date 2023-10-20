@@ -9,12 +9,21 @@ namespace Chat_GPT_Resume_CV_Generator_Web.Controllers
     [ApiController]
     public class UserInfoController : ControllerBase
     {
-        [HttpPost]
+      /*  [HttpPost]
         public IActionResult Post([FromBody] Model data)
         {
             
             Console.WriteLine("yes!");
             Console.WriteLine(data.dynamicData);
+            // Process the JSON data here
+            return new JsonResult("{result:\"hello\"}");
+        }*/
+        [HttpPost]
+        public IActionResult Post([FromBody] UserInfoData.UserInfo data)
+        {
+
+            Console.WriteLine("yes!");
+            Console.WriteLine(data.name);
             // Process the JSON data here
             return new JsonResult("{result:\"hello\"}");
         }
